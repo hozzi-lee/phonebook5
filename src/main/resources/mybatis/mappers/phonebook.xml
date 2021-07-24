@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="phonebook">
+
+	<!-- 쿼리문 작성 -->
+
+	<!-- selectList -->
+	<select id="getList" resultType="com.javaex.vo.PersonVo">
+		<!-- default constructors + setter = 컬럼명과 vo필드 이름이 같아야 한다 -->
+		<![CDATA[
+			SELECT
+			    person_id personID,
+			    name,
+			    hp,
+			    company
+			FROM
+			    person
+			ORDER BY
+			    person_id DESC
+	    ]]>
+	</select>
+
+	<!-- insert -->
+	<insert id="insert" parameterType="com.javaex.vo.PersonVo"> <!-- Dao에서 personVo 넘겨받고 getter -->
+		<![CDATA[
+			INSERT INTO
+			    person
+			VALUES (
+				seq_person_id.NEXTVAL,
+			    #{ name },
+			    #{ hp },
+			    #{ company }
+			)
+		]]>
+	</insert>
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="com.javaex.vo.PersonVo">
+		<![CDATA[
+			DELETE FROM
+				person
+			WHERE
+				person_id = #{ personID }
+		]]>	
+	</delete>
+	
+	<!-- selectOne -->
+	<select id="selectOne" resultType="com.javaex.vo.PersonVo">
+		<![CDATA[
+			SELECT
+			    person_id personID,
+			    name,
+			    hp,
+			    company
+			FROM
+			    person
+			WHERE
+			    person_id = #{ personID }
+		]]>
+	</select>
+	
+	<!-- update -->
+	<update id="update" parameterType="com.javaex.vo.PersonVo">
+		<![CDATA[
+			UPDATE
+				person
+			SET
+				name = #{ name },
+				hp = #{ hp },
+				company = #{ company }
+			WHERE
+				person_id = #{ personID }
+		]]>
+	</update>
+
+</mapper>
