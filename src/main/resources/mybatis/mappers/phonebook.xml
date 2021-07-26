@@ -37,7 +37,7 @@
 	</insert>
 	
 	<!-- delete -->
-	<delete id="delete" parameterType="com.javaex.vo.PersonVo">
+	<delete id="delete" > <!-- parameterType="int" 파라미터가 1개면 생략 가능 -->
 		<![CDATA[
 			DELETE FROM
 				person
@@ -47,7 +47,7 @@
 	</delete>
 	
 	<!-- selectOne -->
-	<select id="selectOne" resultType="com.javaex.vo.PersonVo">
+	<select id="personInfo"  resultType="com.javaex.vo.PersonVo"> <!-- parameterType="int" 파라미터가 1개면 생략 가능-->
 		<![CDATA[
 			SELECT
 			    person_id personID,
