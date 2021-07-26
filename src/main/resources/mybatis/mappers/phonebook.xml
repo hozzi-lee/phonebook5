@@ -44,7 +44,7 @@
 		]]>
 	</select>
 	-->
-	
+
 	<!-- selectOne - resultMap -->
 	<select id="personInfo" parameterType="int" resultMap="resultMapPersonVo">
 		<![CDATA[
