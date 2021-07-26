@@ -37,7 +37,7 @@ public class PhoneDao {
 	
 	// selectOne
 	public PersonVo personInfo(int personID) {
-		PersonVo personInfo = sqlSession.selectOne("phonebook.selectOne", personID);
+		PersonVo personInfo = sqlSession.selectOne("phonebook.personInfo", personID);
 		
 		return personInfo;
 	}
