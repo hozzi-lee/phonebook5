@@ -4,10 +4,17 @@
 
 <mapper namespace="phonebook">
 
+	<resultMap id="resultMapPersonVo" type="PersonVo">
+		<result column="person_id" property="personID" />
+		<result column="name" property="name" />
+		<result column="hp" property="hp" />
+		<result column="company" property="company" />
+	</resultMap>
+
 	<!-- 쿼리문 작성 -->
 
 	<!-- selectList -->
-	<select id="getList" resultType="com.javaex.vo.PersonVo">
+	<select id="getList" resultType="PersonVo">
 		<!-- default constructors + setter = 컬럼명과 vo필드 이름이 같아야 한다 -->
 		<![CDATA[
 			SELECT
@@ -22,8 +29,70 @@
 	    ]]>
 	</select>
 
+	<!-- selectOne
+	<select id="personInfo" parameterType="int" resultType="com.javaex.vo.PersonVo">
+		<![CDATA[
+			SELECT
+			    person_id personID,
+			    name,
+			    hp,
+			    company
+			FROM
+			    person
+			WHERE
+			    person_id = #{ personID }
+		]]>
+	</select>
+	-->
+	
+	<!-- selectOne - resultMap -->
+	<select id="personInfo" parameterType="int" resultMap="resultMapPersonVo">
+		<![CDATA[
+			SELECT
+			    person_id,
+			    name,
+			    hp,
+			    company
+			FROM
+			    person
+			WHERE
+			    person_id = #{ personID }
+		]]>
+	</select>
+	
+	<!-- selectOne - resultType=map -->
+	<select id="personInfo2" parameterType="int" resultType="map">
+		<![CDATA[
+			SELECT
+			    person_id,
+			    name,
+			    hp,
+			    company
+			FROM
+			    person
+			WHERE
+			    person_id = #{ personID }
+		]]>
+	</select>
+
 	<!-- insert -->
-	<insert id="insert" parameterType="com.javaex.vo.PersonVo"> <!-- Dao에서 personVo 넘겨받고 getter -->
+	<insert id="insert" parameterType="PersonVo">
+		<!-- Dao에서 personVo 넘겨받고 getter -->
+		<![CDATA[
+			INSERT INTO
+			    person
+			VALUES (
+				seq_person_id.NEXTVAL,
+			    #{ name },
+			    #{ hp },
+			    #{ company }
+			)
+		]]>
+	</insert>
+	
+	<!-- insert - 2 -->
+	<insert id="insert2" parameterType="map">
+		<!-- Dao에서 personVo 넘겨받고 getter -->
 		<![CDATA[
 			INSERT INTO
 			    person
@@ -46,23 +115,8 @@
 		]]>	
 	</delete>
 	
-	<!-- selectOne -->
-	<select id="personInfo"  resultType="com.javaex.vo.PersonVo"> <!-- parameterType="int" 파라미터가 1개면 생략 가능-->
-		<![CDATA[
-			SELECT
-			    person_id personID,
-			    name,
-			    hp,
-			    company
-			FROM
-			    person
-			WHERE
-			    person_id = #{ personID }
-		]]>
-	</select>
-	
 	<!-- update -->
-	<update id="update" parameterType="com.javaex.vo.PersonVo">
+	<update id="update" parameterType="PersonVo">
 		<![CDATA[
 			UPDATE
 				person

@@ -30,7 +30,7 @@ public class PhoneController {
 			
 			model.addAttribute("pList", phoneDao.getList());
 			
-			return "/WEB-INF/views/list.jsp";
+			return "/list";
 		}
 		
 		// WRITEFORM
@@ -38,7 +38,7 @@ public class PhoneController {
 		public String writeForm() {
 			System.out.println("/writeForm");
 			
-			return "/WEB-INF/views/writeForm.jsp";
+			return "/writeForm";
 		}
 		
 		// INSERT
@@ -51,7 +51,20 @@ public class PhoneController {
 			phoneDao.insert(personVo);
 			
 			return "redirect:/list";
+		}
+		
+		// INSERT - 2
+		@RequestMapping(value = "/write2", method = { RequestMethod.GET, RequestMethod.POST })
+		public String insert2(@RequestParam("name") String name,
+								@RequestParam("hp") String hp,
+								@RequestParam("company") String company) {
+			System.out.println("/write2");
 			
+			//@ModelAttribute --> new PsrsonVo() --> default constructors + setter
+			
+			phoneDao.insert2(name, hp, company);
+			
+			return "redirect:/list";
 		}
 		
 		// DELTE
@@ -74,9 +87,19 @@ public class PhoneController {
 //			PhoneDao phoneDao = new PhoneDao();
 			model.addAttribute("personInfo", phoneDao.personInfo(personID));
 			
-			return "/WEB-INF/views/modifyForm.jsp";
+			return "/modifyForm";
 		}
 		
+		// MODIFYFORM - 2
+		@RequestMapping(value = "/modifyForm2", method = { RequestMethod.GET, RequestMethod.POST })
+		public String modifyForm2(Model model, @RequestParam("id") int personID) {
+			System.out.println("/modifyForm2");
+			
+//			PhoneDao phoneDao = new PhoneDao();
+			model.addAttribute("personMap", phoneDao.personInfo2(personID));
+			
+			return "/modifyForm2";
+		}
 		
 		// MODIFY
 		@RequestMapping(value = "/modify", method = { RequestMethod.GET, RequestMethod.POST })
@@ -88,7 +111,6 @@ public class PhoneController {
 			
 			return "redirect:/list";
 		}
-		
 		
 		
 		
@@ -112,7 +134,7 @@ public class PhoneController {
 		public String test() {
 			System.out.println("/pb/test");
 			
-			return "/WEB-INF/views/test.jsp"; // DispatcherServlet에게 FORWARD하라고 시키기
+			return "/test"; // DispatcherServlet에게 FORWARD하라고 시키기
 		}
 
 }
