@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<h1>폰북5 전화번호 리스트 ${ pageContext.request.contextPath }</h1>
+	<h1>폰북5 전화번호 리스트</h1>
 	<p>입력한 정보 내역입니다.</p>
 
 	<c:forEach items="${ requestScope.pList }" var="vo" varStatus="status">
